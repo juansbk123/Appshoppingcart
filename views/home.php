@@ -17,7 +17,7 @@ $res="";
     <main>
         <div class="container">
             <div class="title">
-                <h2>Todos los productos</h2>
+                <h2>Todos los productos juansbk</h2>
             </div>
             <div class="product-items">
                 <?php
