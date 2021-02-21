@@ -1,8 +1,5 @@
-<?php
 
-header("Lacation:admin/home.php");
-?>
 <html>
 
-<a href="admin/home.php">Redirect to home</a>
+<a href="admin/home.php">Redirect to hom</a>
 </html>
