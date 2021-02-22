@@ -10,7 +10,7 @@
 
 return array(
     "driver"    =>"mysql",
-    "host"      =>"ASP-WebAppIngenieriaWeb-a1c2 (F1: Free)",
+    "host"      =>"mysqlshoppingcart.mysql.database.azure.com",
     "user"      =>"juansbkadminroot",
     "pass"      =>"Jzxc123asd456",
     "database"  =>"shopping_cart",
