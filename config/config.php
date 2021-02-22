@@ -11,7 +11,7 @@
 return array(
     "driver"    =>"mysql",
     "host"      =>"mysqlshoppingcart.mysql.database.azure.com",
-    "user"      =>"juansbkadminroot",
+    "user"      =>"juansbkroot",
     "pass"      =>"Jzxc123asd456",
     "database"  =>"shopping_cart",
     "charset"   =>"utf8"
