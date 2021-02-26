@@ -2,8 +2,8 @@
     <aside class="app-sidebar">
       <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://censur.es/wp-content/uploads/2019/03/default-avatar.png" alt="User Image" width="48">
         <div>
-          <p class="app-sidebar__user-name">John Doe</p>
-          <p class="app-sidebar__user-designation">Administrador</p>
+          <p class="app-sidebar__user-name"><?php echo $_SESSION['userData']['nombre']?></p>
+          <p class="app-sidebar__user-designation"><?php echo $_SESSION['userData']['rol'];?></p>
         </div>
       </div>
       <ul class="app-menu">
@@ -21,6 +21,7 @@
           </ul>
         </li>
         <li><a class="app-menu__item" href="lista_pedidos.php"><i class="app-menu__icon fa fa-shopping-cart"></i><span class="app-menu__label">Pedidos</span></a></li>
-        <li><a class="app-menu__item" href="dashboard.html"><i class="app-menu__icon fa fa-sign-out"></i><span class="app-menu__label">Salir</span></a></li>
+        <li><a class="app-menu__item" href="cupones.php"><i class="app-menu__icon fa fa-ticket"></i><span class="app-menu__label">Cupones</span></a></li>
+        <li><a class="app-menu__item" href="http://localhost/IngWeb/project/controllers/logout.php"><i class="app-menu__icon fa fa-sign-out"></i><span class="app-menu__label">Salir</span></a></li>
       </ul>
     </aside>

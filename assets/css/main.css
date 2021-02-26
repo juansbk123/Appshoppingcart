@@ -11857,7 +11857,6 @@ body.stop-scrolling {
   overflow: hidden;
   padding: 0 10px;
   max-height: 0;
-  webkit-transition: padding 0.15s, max-height 0.15s;
   -webkit-transition: padding 0.15s, max-height 0.15s;
   -o-transition: padding 0.15s, max-height 0.15s;
   transition: padding 0.15s, max-height 0.15s;
@@ -11866,7 +11865,6 @@ body.stop-scrolling {
 .sweet-alert .sa-error-container.show {
   padding: 10px 0;
   max-height: 100px;
-  webkit-transition: padding 0.2s, max-height 0.2s;
   -webkit-transition: padding 0.25s, max-height 0.25s;
   -o-transition: padding 0.25s, max-height 0.25s;
   transition: padding 0.25s, max-height 0.25s;
@@ -15639,7 +15637,6 @@ be a descendant of the grid when it is being dragged.
 .animated-checkbox input[type="checkbox"] + .label-text:before {
   content: "";
   font-family: "FontAwesome";
-  speak: none;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -15684,7 +15681,6 @@ be a descendant of the grid when it is being dragged.
 .animated-radio-button input[type="radio"] + .label-text:before {
   content: "";
   font-family: "FontAwesome";
-  speak: none;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -15764,7 +15760,6 @@ be a descendant of the grid when it is being dragged.
 .toggle input[type="checkbox"] + .button-indecator:before {
   content: "";
   font-family: "FontAwesome";
-  speak: none;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -16607,7 +16602,7 @@ be a descendant of the grid when it is being dragged.
 }
 
 .user .profile {
-  margin: -30px -30px 0 -30px;
+  margin: 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -16662,7 +16657,7 @@ be a descendant of the grid when it is being dragged.
 }
 
 .user .tab-content {
-  margin: 20px -10px -10px;
+  margin: 0px -10px -10px;
 }
 
 .user .timeline-post {

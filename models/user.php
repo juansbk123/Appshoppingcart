@@ -4,8 +4,10 @@
     class User extends Queries {
         private $id;
         private $name;
+        private $lastname;
         private $email;
         private $pass;
+        private $birthdate;
 
         public function __construct() {
             parent::__construct();
@@ -21,7 +23,7 @@
 
         public function sessionLogin(int $idUser) {
             $this->id = $idUser;
-            $query = "SELECT id, nombre, apellidos, email, contraseña, fecha_nac FROM usuario WHERE id = $this->id";
+            $query = "SELECT id, nombre, apellidos, email, contraseña, fecha_nac, rol FROM usuario WHERE id = $this->id";
             $res = $this->select($query);
             return $res;
         }
@@ -30,9 +32,30 @@
             $this->name = $name;
             $this->email = $email;
             $this->pass = $pass;
-            $query = "INSERT INTO usuario(nombre, email, contraseña) VALUES(?,?,?)";
+            $query = "INSERT INTO usuario(nombre, email, contraseña, rol) VALUES(?,?,?,'Cliente')";
             $arrData = [$this->name,$this->email,$this->pass];
             $req = $this->insert($query,$arrData);
+            return $req;
+        }
+
+        public function updateUser(int $idUser, string $name, string $lastname, string $birthdate, string $email) {
+            $this->id = $idUser;
+            $this->name = $name;
+            $this->lastname = $lastname;
+            $this->email = $email;
+            $this->birthdate = $birthdate;
+            $query = "UPDATE usuario SET nombre = ?, apellidos = ?, email =?, fecha_nac = ? WHERE id = $this->id";
+            $arrData = [$this->name,$this->lastname,$this->email,$this->birthdate];
+            $req = $this->update($query,$arrData);
+            return $req;
+        }
+
+        public function updatePass(int $idUser, string $pass) {
+            $this->id = $idUser;
+            $this->pass = $pass;
+            $query = "UPDATE usuario SET contraseña = ? WHERE id = $this->id";
+            $arrData = [$this->pass];
+            $req = $this->update($query,$arrData);
             return $req;
         }
     }

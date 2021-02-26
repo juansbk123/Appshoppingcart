@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -7,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Main CSS-->
-    <link rel="stylesheet" type="text/css" href="http://localhost/uNJBG/ING%20WEB%20Vlll/PHP/project/assets/css/main.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost/IngWeb/project/assets/css/main.css">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
@@ -19,33 +20,33 @@
     <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-dashboard"></i> Clientes</h1>
+          <h1><i class="fa fa-dashboard"></i> Usuarios</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Clientes</li>
-          <li class="breadcrumb-item"><a href="#">Añadir cliente</a></li>
+          <li class="breadcrumb-item">Usuario</li>
+          <li class="breadcrumb-item"><a href="#">Añadir usuario</a></li>
         </ul>
       </div>
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
-            <h3 class="tile-title">Añadir cliente</h3>
+            <h3 class="tile-title">Añadir usuario</h3>
             <div class="tile-body">
                 <div class="row">
                   <div class="col-lg-5">
                     <form>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Nombre</label>
-                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="email" aria-describedby="emailHelp">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="email" aria-describedby="emailHelp">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Fecha de nacimiento</label>
-                        <input class="form-control form-control-lg" id="demoDate" type="text" placeholder="Select Date">                     
+                        <input class="form-control form-control-lg" id="demoDate" type="text" >                     
                       </div>
                     </form>
                   </div>
@@ -53,11 +54,11 @@
                     <form>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Apellidos</label>
-                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" >
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input class="form-control form-control-lg" id="exampleInputPassword1" type="password" placeholder="Password">
+                        <input class="form-control form-control-lg" id="exampleInputPassword1" type="password" >
                       </div>
                       <div class="form-group">
                         <label for="exampleSelect1">Rol</label>
@@ -78,14 +79,14 @@
       </div>
     </main>
     <!-- Essential javascripts for application to work-->
-    <script src="http://localhost/uNJBG/ING%20WEB%20Vlll/PHP/project/assets/js/jquery-3.3.1.min.js"></script>
-    <script src="http://localhost/uNJBG/ING%20WEB%20Vlll/PHP/project/assets/js/popper.min.js"></script>
-    <script src="http://localhost/uNJBG/ING%20WEB%20Vlll/PHP/project/assets/js/bootstrap.min.js"></script>
-    <script src="http://localhost/uNJBG/ING%20WEB%20Vlll/PHP/project/assets/js/main.js"></script>
+    <script src="http://localhost/IngWeb/project/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="http://localhost/IngWeb/project/assets/js/popper.min.js"></script>
+    <script src="http://localhost/IngWeb/project/assets/js/bootstrap.min.js"></script>
+    <script src="http://localhost/IngWeb/project/assets/js/main.js"></script>
     <!-- The javascript plugin to display page loading on top-->
-    <script src="http://localhost/uNJBG/ING%20WEB%20Vlll/PHP/project/assets/js/plugins/pace.min.js"></script>
+    <script src="http://localhost/IngWeb/project/assets/js/plugins/pace.min.js"></script>
     <!-- Page specific javascripts-->
-    <script type="text/javascript" src="http://localhost/uNJBG/ING%20WEB%20Vlll/PHP/project/assets/js/plugins/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="http://localhost/IngWeb/project/assets/js/plugins/bootstrap-datepicker.min.js"></script>
     <script>    
       $('#demoDate').datepicker({
       	format: "dd/mm/yyyy",
