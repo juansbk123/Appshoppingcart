@@ -1,28 +1,43 @@
 <?php
-    include('../../models/queries_new_product.php');
+    include('../../models/product.php');
 
-    // session_start();
-    $new_product = new Queries_new_product();
+    session_start();
+    if(empty($_SESSION['login']) || !$_SESSION['userData']['rol'] == "Administrador"){
+      header('Location:../client/login.php');
+    }
+    $new_product = new Product();
     $res="";
   
   function obtener_nombre_imagen(){    
-   $nombre_file=$_FILES['file']['name'];
+    $name_file = $_FILES['file']['name'];
+    $type_file = $_FILES['file']['type'];
+    $size_file = $_FILES['file']['size'];
+    if($size_file<=3000000){
 
-   $tamanio_file=$_FILES['file']['size'];
-   $tipo_file=$_FILES['file']['type'];
-   $directorio = "imagenes/";
-  
-   if($tamanio_file<=3000000){
-       if($tipo_file=="image/jpg" || $tipo_file=="image/png" ||$tipo_file=="image/gif" || $tipo_file=="image/heic"){
-           $archivo = $directorio . basename($nombre_file);          
-               if (move_uploaded_file($_FILES["file"] ["tmp_name"], $archivo)) {
-                   echo " solo se pueden subir images [jpg,png,gif,heic] \n archivo subido con exito";
-          
-               } else {
-                   echo "error en la subida del archivo";
-               }
-       }
-   }
+      if($type_file=="image/jpeg" || $type_file=="image/png"){
+            $origin = "";
+            if($type_file == "image/jpeg"){
+                $origin = imagecreatefromjpeg($_FILES['file']["tmp_name"]);
+            }
+            elseif($type_file == "image/png"){
+                $origin = imagecreatefrompng($_FILES['file']["tmp_name"]);
+            }
+            list($width,$height) = getimagesize($_FILES['file']["tmp_name"]);
+            $thumb_small = imagecreatetruecolor(107,107);
+            imagecopyresampled($thumb_small,$origin,0,0,0,0,107,107,$width,$height);
+            imagejpeg($thumb_small,"../../assets/images/products/small/".$name_file,100);
+            $thumb_medium = imagecreatetruecolor(230,180);
+            imagecopyresampled($thumb_medium,$origin,0,0,0,0,230,180,$width,$height);
+            imagejpeg($thumb_medium,"../../assets/images/products/medium/".$name_file,100);
+            $thumb_big = imagecreatetruecolor(390,290);
+            imagecopyresampled($thumb_big,$origin,0,0,0,0,390,290,$width,$height);
+            imagejpeg($thumb_big,"../../assets/images/products/big/".$name_file,100);
+            imagedestroy($thumb_small);
+            imagedestroy($thumb_medium);
+            imagedestroy($thumb_big);
+            imagedestroy($origin);
+      }
+    }
   }
     if($_POST) 
   {
@@ -37,8 +52,6 @@
                 $price_produ = $_POST['price_product'];
                 $stock_produ = $_POST['stock_product'];
                 $nombre_file = $_FILES['file']['name'];
-                // print_r("$nombre_file",$name_produ,$description_produ, $price_produ, $stock_produ);
-
                 $req_product =  $new_product->insert_product($name_produ,$description_produ,$price_produ,$nombre_file ,$stock_produ);
                if($req_product){
                   echo "Se inserto correctamente";
@@ -59,7 +72,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Main CSS-->
-    <link rel="stylesheet" type="text/css" href="http://localhost/uNJBG/ING_WEB_Vlll/PHP/project/assets/css/main.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost/IngWeb/project/assets/css/main.css">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
@@ -86,15 +99,14 @@
             <div class="tile-body">
                 <div class="row">
                   <div class="col-lg-5">
-                    <!-- form-> -->
-                    <form class="" method="post" action="" enctype="multipart/form-data" > 
+                  <form class="" method="post" action="" enctype="multipart/form-data" > 
                       <div class="form-group">
                         <label for="exampleInputEmail1">Nombre</label>
-                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" placeholder="Enter email" name="name_product">
+                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" name="name_product">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Descripcion</label>
-                        <textarea class="form-control" rows="4" placeholder="Enter your address" name="description_product"></textarea>
+                        <textarea class="form-control" rows="4" name="description_product"></textarea>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Imagen</label>
@@ -107,11 +119,15 @@
                     <!-- <form> -->
                       <div class="form-group">
                         <label for="exampleInputEmail1">Precio</label>
-                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="number" aria-describedby="emailHelp" placeholder="Enter email" name="price_product">
+                        <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">S/</span></div>
+                        <input class="form-control form-control-lg" id="exampleInputAmount" type="text" name="price_product">
+                        <div class="input-group-append"><span class="input-group-text">.00</span></div>
+                      </div>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1">Stock</label>
-                        <input class="form-control form-control-lg" id="exampleInputPassword1" type="number" placeholder="Password"  name="stock_product">
+                        <input class="form-control form-control-lg" id="exampleInputPassword1" type="number"  name="stock_product">
                       </div>
                       <!-- <button class="btn login-btn" name="anadir_producto" type="submit">Acceder</button> -->
 
@@ -119,21 +135,20 @@
                 </div>
             </div>
             <div class="tile-footer">
-                <button class="btn btn-primary" name="anadir_producto" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button>
+                <button class="btn btn-primary" name="anadir_producto" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Registrar</button>
             </div>
           </div>
         </div>
       </div>
       </form>
-
     </main>
     <!-- Essential javascripts for application to work-->
-    <script src="http://localhost/uNJBG/ING_WEB_Vlll/PHP/project/assets/js/jquery-3.3.1.min.js"></script>
-    <script src="http://localhost/uNJBG/ING_WEB_Vlll/PHP/project/assets/js/popper.min.js"></script>
-    <script src="http://localhost/uNJBG/ING_WEB_Vlll/PHP/project/assets/js/bootstrap.min.js"></script>
-    <script src="http://localhost/uNJBG/ING_WEB_Vlll/PHP/project/assets/js/main.js"></script>
+    <script src="http://localhost/IngWeb/project/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="http://localhost/IngWeb/project/assets/js/popper.min.js"></script>
+    <script src="http://localhost/IngWeb/project/assets/js/bootstrap.min.js"></script>
+    <script src="http://localhost/IngWeb/project/assets/js/main.js"></script>
     <!-- The javascript plugin to display page loading on top-->
-    <script src="http://localhost/uNJBG/ING_WEB_Vlll/PHP/project/assets/js/plugins/pace.min.js"></script>
+    <script src="http://localhost/IngWeb/project/assets/js/plugins/pace.min.js"></script>
     <!-- Page specific javascripts-->
     <!-- Google analytics script-->
     <script type="text/javascript">
@@ -146,5 +161,5 @@
       	ga('send', 'pageview');
       }
     </script>
-   </body>
+  </body>
 </html>

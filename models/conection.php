@@ -4,7 +4,7 @@ class Conexion {
     private $host, $user, $pass, $database, $charset;
    
     public function __construct() {
-        $db_cfg = require_once 'config.php';
+        $db_cfg = require '../../config/config.php';
         $this->driver=$db_cfg["driver"];
         $this->host=$db_cfg["host"];
         $this->user=$db_cfg["user"];
@@ -19,7 +19,7 @@ class Conexion {
             $pdo = new PDO($connectionString,$this->user,$this->pass);
             $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            echo "ERROR: ".$e->getMessage();
+            echo "ERROR: ".$e->getMessage() ."".$connectionString;
         }
         return $pdo;
     }

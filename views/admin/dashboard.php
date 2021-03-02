@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+
+if(empty($_SESSION['login']) || !$_SESSION['userData']['rol'] == "Administrador"){
+  header('Location:../client/login.php');
+}
+
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -68,21 +77,21 @@
                 <tbody>
                     <tr>
                     <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <td>21/02/21</td>
+                    <td>Juan Salas</td>
+                    <td>S/ 25.50</td>
                     </tr>
                     <tr>
                     <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
+                    <td>21/02/21</td>
+                    <td>Fabrizio Gutierrez</td>
+                    <td>S/ 75.00</td>
                     </tr>
                     <tr>
                     <td>3</td>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
+                    <td>20/02/21</td>
+                    <td>Raul Sanchez</td>
+                    <td>S/ 31.20</td>
                     </tr>
                 </tbody>
                 </table>
@@ -103,21 +112,21 @@
               <tbody>
                 <tr>
                   <td>1</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
+                  <td>Pedro</td>
+                  <td>Hernandez</td>
+                  <td>pedro@gmail.com</td>
                 </tr>
                 <tr>
                   <td>2</td>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
+                  <td>Luis</td>
+                  <td>Medina</td>
+                  <td>luis@hotmail.com</td>
                 </tr>
                 <tr>
                   <td>3</td>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
+                  <td>Julio</td>
+                  <td>Mendoza</td>
+                  <td>julio@gmail.com</td>
                 </tr>
               </tbody>
             </table>
