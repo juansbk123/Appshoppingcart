@@ -7,6 +7,7 @@
         private $lastname;
         private $email;
         private $pass;
+        private $role;
         private $birthdate;
 
         public function __construct() {
@@ -38,6 +39,19 @@
             return $req;
         }
 
+        public function createUser(string $name, string $lastname, string $birthdate, string $email, string $pass, string $role) {
+            $this->name = $name;
+            $this->lastname = $lastname;
+            $this->email = $email;
+            $this->pass = $pass;
+            $this->birthdate = $birthdate;
+            $this->role = $role;
+            $query = "INSERT INTO usuario(nombre, apellidos, email, contraseña, fecha_nac, rol) VALUES(?,?,?,?,?,?)";
+            $arrData = [$this->name,$this->lastname, $this->email,$this->pass, $this->birthdate, $this->role];
+            $req = $this->insert($query,$arrData);
+            return $req;
+        }
+
         public function updateUser(int $idUser, string $name, string $lastname, string $birthdate, string $email) {
             $this->id = $idUser;
             $this->name = $name;
@@ -57,6 +71,12 @@
             $arrData = [$this->pass];
             $req = $this->update($query,$arrData);
             return $req;
+        }
+
+        public function getAllUsers() {
+            $query = "SELECT * FROM usuario";
+            $res = $this->selectAll($query);
+            return $res;
         }
     }
 ?>

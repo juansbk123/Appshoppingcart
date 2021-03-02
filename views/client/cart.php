@@ -2,6 +2,12 @@
 include('../../models/product.php');
 $new_product = new Product();
 session_start();
+if(empty($_SESSION['login']) || !$_SESSION['userData']['rol'] == "Cliente"){
+    header('Location:../client/login.php');
+  }
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -194,7 +200,7 @@ session_start();
             formData = new FormData();
         idCupon && formData.append("id", idCupon);
         formData.append("total", total);
-        fetch('../../config/procesarpedido.php',{
+        fetch('../../controllers/pedido/procesarpedido.php',{
             method:"POST",
             body: formData
         }).then(res=> res.json())

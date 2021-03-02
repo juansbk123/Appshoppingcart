@@ -2,6 +2,9 @@
 include('../../models/product.php');
 $new_product = new Product();
 session_start();
+if(isset($_SESSION['userData']) && $_SESSION['userData']['rol'] == "Administrador"){
+    header('Location:../client/login.php');
+}
 $res="";
 
 if($_POST) {

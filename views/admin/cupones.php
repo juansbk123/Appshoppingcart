@@ -2,7 +2,27 @@
     include('../../models/coupon.php');
 
     session_start();
+
+    if(empty($_SESSION['login']) || !$_SESSION['userData']['rol'] == "Administrador"){
+      header('Location:../client/login.php');
+    }
+
     $coupon = new Coupon();
+
+    if($_POST){
+      if(empty($_POST['codigo']) || empty($_POST['tipo'] ) || empty($_POST['valor'])) {            
+        $res = "datos invalidos";
+      }
+      else {
+        $codigo = $_POST['codigo'];
+        $tipo = $_POST['tipo'];
+        $valor = $_POST['valor'];
+        $res_query = $coupon->addCoupon($codigo,$tipo,$valor);
+        if($res_query){
+          $res = "Se inserto correctamente";
+        }
+      }
+    }
 
     $coupons =  $coupon->getAllCoupons();
 
@@ -91,27 +111,29 @@
                       <h5 class="modal-title">Añadir cupón</h5>
                       <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
-                    <div class="modal-body">
-                    <div class="form-group">
-                        <label class="control-label">Codigo de cupon</label>
-                        <input class="form-control" type="text" >
-                    </div>
-                    <div class="form-group">
-                    <label for="exampleSelect1">Tipo</label>
-                    <select class="form-control" id="exampleSelect1">
-                      <option>Porcentaje</option>
-                      <option>Monto</option>
-                    </select>
-                  </div>
-                <div class="form-group">
-                  <label class="control-label">Valor</label>
-                  <input class="form-control" type="text" >
-                </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button class="btn btn-primary" type="button">Guardar</button>
-                      <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    </div>
+                    <form action="" method="post">
+                      <div class="modal-body">
+                        <div class="form-group">
+                            <label class="control-label">Codigo de cupon</label>
+                            <input class="form-control" type="text" name="codigo">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleSelect1">Tipo</label>
+                            <select class="form-control" id="exampleSelect1" name="tipo">
+                              <option value="porcentaje">Porcentaje</option>
+                              <option value="monto">Monto</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label">Valor</label>
+                          <input class="form-control" type="text" name="valor">
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Guardar</button>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -125,14 +147,6 @@
     <!-- Page specific javascripts-->
     <!-- Google analytics script-->
     <script type="text/javascript">
-      if(document.location.hostname == 'pratikborsadiya.in') {
-      	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      	ga('create', 'UA-72504830-1', 'auto');
-      	ga('send', 'pageview');
-      }
     </script>
   </body>
 </html>

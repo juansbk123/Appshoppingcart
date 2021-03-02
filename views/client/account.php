@@ -1,6 +1,10 @@
 <?php 
 session_start();
 
+if(empty($_SESSION['login']) || !$_SESSION['userData']['rol'] == "Cliente"){
+    header('Location:../client/login.php');
+}
+
 if(!empty($_SESSION['userData']['fecha_nac'])){
     $arrDate = explode("-",$_SESSION['userData']['fecha_nac']);
     $year =  $arrDate[0];

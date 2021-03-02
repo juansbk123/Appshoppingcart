@@ -2,7 +2,11 @@
 include('../../models/order.php');
 $new_order = new Order();
 session_start();
+if(empty($_SESSION['login']) || !$_SESSION['userData']['rol'] == "Cliente"){
+    header('Location:../client/login.php');
+  }
 $orders = $new_order->getUserOrders($_SESSION['iduser']);
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -1,4 +1,33 @@
-<?php session_start();?>
+<?php 
+  include('../../models/user.php');
+  session_start();
+  
+  if(empty($_SESSION['login']) || !$_SESSION['userData']['rol'] == "Administrador"){
+    header('Location:../client/login.php');
+  }
+
+  $new_user = new User();
+  $res = "";
+
+  if($_POST){
+    if(empty($_POST['nombre']) || empty($_POST['apellidos'] ) || empty($_POST['email'])  || empty($_POST['contraseña']) || empty($_POST['fecha_nac'])|| empty($_POST['rol'])) {            
+      $res = "datos invalidos";
+    }
+    else {
+      $nombre = $_POST['nombre'];
+      $apellidos = $_POST['apellidos'];
+      $email = $_POST['email'];
+      $contraseña = $_POST['contraseña'];
+      $fechanac = $_POST['fecha_nac'];
+      $rol = $_POST['rol'];
+      $res_query = $new_user->createUser($nombre,$apellidos,$fechanac,$email,$contraseña,$rol);
+      if($res_query){
+        $res = "Se inserto correctamente";
+      }
+    }
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -32,48 +61,46 @@
         <div class="col-md-12">
           <div class="tile">
             <h3 class="tile-title">Añadir usuario</h3>
+            <form action="" method="POST">
             <div class="tile-body">
                 <div class="row">
                   <div class="col-lg-5">
-                    <form>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Nombre</label>
-                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="email" aria-describedby="emailHelp">
+                        <input class="form-control form-control-lg" type="text" name="nombre">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="email" aria-describedby="emailHelp">
+                        <input class="form-control form-control-lg" type="email" aria-describedby="emailHelp" name="email" autocomplete="new-password">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Fecha de nacimiento</label>
-                        <input class="form-control form-control-lg" id="demoDate" type="text" >                     
+                        <input class="form-control form-control-lg" id="demoDate" type="text" name="fecha_nac">                     
                       </div>
-                    </form>
                   </div>
                   <div class="col-lg-5 offset-lg-1">
-                    <form>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Apellidos</label>
-                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" >
+                        <input class="form-control form-control-lg" type="text" aria-describedby="emailHelp" name="apellidos">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input class="form-control form-control-lg" id="exampleInputPassword1" type="password" >
+                        <input class="form-control form-control-lg" id="exampleInputPassword1" type="password" autocomplete="new-password" name="contraseña">
                       </div>
                       <div class="form-group">
                         <label for="exampleSelect1">Rol</label>
-                        <select class="form-control form-control-lg" id="exampleSelect1">
-                        <option>Cliente</option>
-                        <option>Administrador</option>
+                        <select class="form-control form-control-lg" id="exampleSelect1" name="rol">
+                        <option value="cliente">Cliente</option>
+                        <option value="administrador">Administrador</option>
                         </select>
                       </div>
-                    </form>
                   </div>
                 </div>
             </div>
             <div class="tile-footer">
-                <button class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button>
+                <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Registrar</button>
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -89,10 +116,10 @@
     <script type="text/javascript" src="http://localhost/IngWeb/project/assets/js/plugins/bootstrap-datepicker.min.js"></script>
     <script>    
       $('#demoDate').datepicker({
-      	format: "dd/mm/yyyy",
+      	format: "yyyy-mm-dd",
       	autoclose: true,
       	todayHighlight: true
-      });    
+      }); 
     </script>
     <!-- Google analytics script-->
     <script type="text/javascript">

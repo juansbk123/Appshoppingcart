@@ -48,6 +48,6 @@
            $res = $this->conexion->prepare($this->strquery);
            $res->execute();
            return $res;
-       } 
+       }
     }
 ?>

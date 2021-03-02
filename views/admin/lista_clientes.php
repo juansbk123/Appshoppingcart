@@ -1,4 +1,12 @@
-<?php session_start();?>
+<?php 
+session_start();
+if(empty($_SESSION['login']) || !$_SESSION['userData']['rol'] == "Administrador"){
+  header('Location:../client/login.php');
+}
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>

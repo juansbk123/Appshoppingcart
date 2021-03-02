@@ -2,30 +2,13 @@
     include('../../models/product.php');
 
     session_start();
+    if(empty($_SESSION['login']) || !$_SESSION['userData']['rol'] == "Administrador"){
+      header('Location:../client/login.php');
+    }
     $new_product = new Product();
     $res="";
   
   function obtener_nombre_imagen(){    
-  //  $nombre_file=$_FILES['file']['name'];
-
-  //  $tamanio_file=$_FILES['file']['size'];
-  //  $tipo_file=$_FILES['file']['type'];
-
-  //  $directorio = "imagenes/";
-  
-  //  if($tamanio_file<=3000000){
-  //      if($tipo_file=="image/jpeg" || $tipo_file=="image/png" ||$tipo_file=="image/gif" || $tipo_file=="image/heic"){
-  
-  //          $archivo = $directorio . basename($nombre_file);
-
-  //              if (move_uploaded_file($_FILES["file"] ["tmp_name"], $archivo)) {
-  //                  echo " solo se pueden subir images [jpg,png,gif,heic] \n archivo subido con exito";
-          
-  //              } else {
-  //                  echo "error en la subida del archivo";
-  //              }
-  //      }
-  //  }
     $name_file = $_FILES['file']['name'];
     $type_file = $_FILES['file']['type'];
     $size_file = $_FILES['file']['size'];
@@ -119,11 +102,11 @@
                   <form class="" method="post" action="" enctype="multipart/form-data" > 
                       <div class="form-group">
                         <label for="exampleInputEmail1">Nombre</label>
-                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" placeholder="Ingresar nombre" name="name_product">
+                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" name="name_product">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Descripcion</label>
-                        <textarea class="form-control" rows="4" placeholder="Ingresar descripción" name="description_product"></textarea>
+                        <textarea class="form-control" rows="4" name="description_product"></textarea>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Imagen</label>
@@ -136,11 +119,15 @@
                     <!-- <form> -->
                       <div class="form-group">
                         <label for="exampleInputEmail1">Precio</label>
-                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="number" aria-describedby="emailHelp" placeholder="Ingresar precio" name="price_product">
+                        <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">S/</span></div>
+                        <input class="form-control form-control-lg" id="exampleInputAmount" type="text" name="price_product">
+                        <div class="input-group-append"><span class="input-group-text">.00</span></div>
+                      </div>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1">Stock</label>
-                        <input class="form-control form-control-lg" id="exampleInputPassword1" type="number" placeholder="Ingresar stock"  name="stock_product">
+                        <input class="form-control form-control-lg" id="exampleInputPassword1" type="number"  name="stock_product">
                       </div>
                       <!-- <button class="btn login-btn" name="anadir_producto" type="submit">Acceder</button> -->
 
