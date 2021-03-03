@@ -89,6 +89,14 @@ header {
     font-size: 1.6rem;
 }
 
+.search-form input:focus {
+    border:1px solid rgba(0,0,0,.12);
+    border-right: 0;
+    border-bottom-left-radius: 0;
+    background-color: #fff;
+    outline: none;
+}
+
 .search-form button {
     width: 50px;
     height: 50px;
@@ -163,7 +171,7 @@ header {
 
 .product-items {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    grid-template-columns: repeat(4, 26rem);
     gap: 3rem;
     max-width: 130rem;
     margin: 0 auto;

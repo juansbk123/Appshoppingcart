@@ -4,9 +4,11 @@ $new_product = new Product();
 session_start();
 if(empty($_SESSION['login']) || !$_SESSION['userData']['rol'] == "Cliente"){
     header('Location:../client/login.php');
-  }
+}
 
-
+if($_POST){
+    unset($_SESSION['carrito']);
+}
 
 ?>
 <!DOCTYPE html>
@@ -120,7 +122,7 @@ if(empty($_SESSION['login']) || !$_SESSION['userData']['rol'] == "Cliente"){
                                     $total = $subtotal;
                             ?>
                         </div>
-                        <div class="acciones-carrito-pago m-t-1"><div style="margin-top: 20px;"><div class="col-xs-12 col-md-3"><a id="GTM-carrito-vaciarcarrito" href="#" class="btn btn-submit btn-block form-control-margin"><svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512" width="18" style="vertical-align: sub;margin-right:5px;"><title>Trash</title><path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 112h352"/><path d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>Vaciar carrito</a></div></div></div>
+                        <div class="acciones-carrito-pago m-t-1"><div style="margin-top: 20px;"><div class="col-xs-12 col-md-3"><form action="" method="post"><input type="hidden" name="ss"><button type="submit" class="btn btn-submit btn-block form-control-margin" id="vaciarcart"><svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512" width="18" style="vertical-align: sub;margin-right:5px;"><title>Trash</title><path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 112h352"/><path d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>Vaciar carrito</button></form></div></div></div>
                     </div>
                     <?php } 
                     

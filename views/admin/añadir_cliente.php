@@ -61,35 +61,35 @@
         <div class="col-md-12">
           <div class="tile">
             <h3 class="tile-title">Añadir usuario</h3>
-            <form action="" method="POST">
+            <form action="" method="POST" id="form-login">
             <div class="tile-body">
                 <div class="row">
                   <div class="col-lg-5">
                       <div class="form-group">
                         <label for="exampleInputEmail1">Nombre</label>
-                        <input class="form-control form-control-lg" type="text" name="nombre">
+                        <input class="form-control form-control-lg" type="text" name="nombre" id="input1" autofocus>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input class="form-control form-control-lg" type="email" aria-describedby="emailHelp" name="email" autocomplete="new-password">
+                        <input class="form-control form-control-lg" type="email" aria-describedby="emailHelp" name="email" autocomplete="new-password" id="input3">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Fecha de nacimiento</label>
-                        <input class="form-control form-control-lg" id="demoDate" type="text" name="fecha_nac">                     
+                        <input class="form-control form-control-lg" type="text" name="fecha_nac" id="input5">                     
                       </div>
                   </div>
                   <div class="col-lg-5 offset-lg-1">
                       <div class="form-group">
                         <label for="exampleInputEmail1">Apellidos</label>
-                        <input class="form-control form-control-lg" type="text" aria-describedby="emailHelp" name="apellidos">
+                        <input class="form-control form-control-lg" type="text" aria-describedby="emailHelp" name="apellidos" id="input2">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input class="form-control form-control-lg" id="exampleInputPassword1" type="password" autocomplete="new-password" name="contraseña">
+                        <input class="form-control form-control-lg" type="password" autocomplete="new-password" name="contraseña" id="input4">
                       </div>
                       <div class="form-group">
                         <label for="exampleSelect1">Rol</label>
-                        <select class="form-control form-control-lg" id="exampleSelect1" name="rol">
+                        <select class="form-control form-control-lg" name="rol" id="input6">
                         <option value="cliente">Cliente</option>
                         <option value="administrador">Administrador</option>
                         </select>
@@ -115,11 +115,56 @@
     <!-- Page specific javascripts-->
     <script type="text/javascript" src="http://localhost/IngWeb/project/assets/js/plugins/bootstrap-datepicker.min.js"></script>
     <script>    
-      $('#demoDate').datepicker({
+      $('#input5').datepicker({
       	format: "yyyy-mm-dd",
       	autoclose: true,
       	todayHighlight: true
-      }); 
+      });
+
+      $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+          event.preventDefault();
+          return false;
+        }
+      });
+
+      function emailIsValid (email) {
+            return /\S+@\S+\.\S+/.test(email)  
+      }
+
+      function passwordIsValid (pass) {
+            return /^(?=.*\d)(?=.*[A-Z])[0-9a-zA-Z]{6,16}$/.test(pass);
+      }
+
+      const form = document.getElementById('form-login');
+      
+      form.addEventListener('submit',(e)=>{
+        e.preventDefault();
+            if (!emailIsValid(document.getElementById('input3').value)){
+                alert('Email invalido');
+                document.getElementById('input3').classList.add('is-invalid');
+            }
+            else if (!passwordIsValid(document.getElementById('input4').value)){
+                alert('Contraseña invalida');
+                document.getElementById('input4').classList.add('is-invalid');
+            } 
+            else form.submit();
+      })
+
+      form.querySelectorAll('input').forEach((el)=>{
+            el.addEventListener('focus',(e)=>e.target.classList.remove('is-invalid'));
+      })
+
+      form.addEventListener('keydown',(e)=>{
+            if(e.keyCode == "13" || e.keyCode == "40"){
+                if (e.target.id != "input6"){
+                  let i = e.target.id.slice('-1');
+                  e.target.parentNode.parentNode.parentNode.querySelector(`#input${Number(i)+1}`).focus();
+                }
+                else document.formlogin.submit();
+            }
+        });
+
     </script>
     <!-- Google analytics script-->
     <script type="text/javascript">

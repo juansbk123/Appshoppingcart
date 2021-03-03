@@ -2,7 +2,6 @@
     include('../../models/user.php');
     session_start();
     $user = new User();
-    $res = "";
     if($_POST) {
         if(empty($_POST['txtemail']) || empty($_POST['txtpass']) || empty($_POST['txtname'])) {
             $res = "datos invalidos";
@@ -60,11 +59,10 @@
                     <label for="password">Contraseña</label>
                     <div class="form-input">
                         <input type="password" class="form-control" id="password" name="txtpass">
-                        <i class="fa fa-exclamation-triangle"></i>
                     </div>
                 </div>
                 <div class="m-top-1 p-top-sm">
-                    <button class="btn login-btn" name="login" type="button" id="login">Registrarse</button>
+                    <button class="btn login-btn" name="login" type="submit" id="login">Registrarse</button>
                 </div>
                 <div class="m-top-2 p-top-sm">
                     <div class="font-14 text-center m-bottom-xs">
@@ -73,23 +71,48 @@
                 </div>
             </form>
         </div>
-        <span><?php if(isset($res)) echo $res?></span>
+        <?php if(isset($res)){ ?>
+    <script>
+    alert("<?php echo $res ?>")
+    </script>
+    <?php } ?>
     </div>
     <script>
         function emailIsValid (email) {
             return /\S+@\S+\.\S+/.test(email)  
         }
+
+        function passwordIsValid (pass) {
+            return /^(?=.*\d)(?=.*[A-Z])[0-9a-zA-Z]{6,16}$/.test(pass);
+        }
+
         const form = document.getElementById('form-login');
         form.addEventListener('submit',(e)=>{
             e.preventDefault();
-            if (emailIsValid(document.getElementById('email').value)) form.submit();
-            else alert('Email invalido');
+            if (!emailIsValid(document.getElementById('email').value)){
+                alert('Email invalido');
+                document.getElementById('email').style.borderColor = "#dc3545";
+            }
+            else if (!passwordIsValid(document.getElementById('password').value)){
+                alert('Contraseña invalida');
+                document.getElementById('password').style.borderColor = "#dc3545";
+            } 
+            else form.submit();
+        })
+
+        form.querySelectorAll('input').forEach((el)=>{
+            el.addEventListener('focus',(e)=>e.target.removeAttribute('style'));
         })
 
         form.addEventListener('keydown',(e)=>{
+            if (e.keyCode == "13") e.preventDefault();
             if(e.keyCode == "13" || e.keyCode == "40"){
                 if (e.target.id != "password") e.target.parentNode.parentNode.nextElementSibling.querySelector('input').focus();
-                else document.formlogin.submit();
+                else {
+                    if (!emailIsValid(document.getElementById('email').value)) alert('Email invalido');
+                    else if (!passwordIsValid(document.getElementById('password').value)) alert('Contraseña invalida');
+                    else form.submit();
+                };
             }
             else if(e.keyCode == "38"){
                 e.target.parentNode.parentNode.previousElementSibling.querySelector('input').focus();

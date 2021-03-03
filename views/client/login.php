@@ -2,7 +2,7 @@
     include('../../models/user.php');
     session_start();
     $user = new User();
-    $res="";
+
     if($_POST) {
         if(empty($_POST['txtemail']) || empty($_POST['txtpass'])) {
             $res = "datos invalidos";
@@ -44,12 +44,12 @@
             <a href="home.php">Tech Shop</a>
         </div>
         <div class="sign-in-inner">
-            <form class="login" method="post" action="">
+            <form class="login" method="post" action="" id="form-login">
                 <h2 class="text-center">Iniciar sesión</h2>
                 <div class="form-group m-bottom-md">
                     <label for="username">Email</label>
                     <div class="form-input">
-                        <input type="text" class="form-control" id="username" name="txtemail">
+                        <input type="text" class="form-control" id="email" name="txtemail">
                         <i class="fa fa-exclamation-triangle"></i>
                     </div>
                 </div>
@@ -70,7 +70,43 @@
                 </div>
             </form>
         </div>
-        <span><?php if(isset($res)) echo $res?></span>
     </div>
+    <?php if(isset($res)){ ?>
+    <script>
+    alert("<?php echo $res ?>")
+    </script>
+    <?php } ?>
+    <script>
+        function emailIsValid (email) {
+            return /\S+@\S+\.\S+/.test(email)  
+        }
+        const form = document.getElementById('form-login');
+        form.addEventListener('submit',(e)=>{
+            e.preventDefault();
+            if (emailIsValid(document.getElementById('email').value)) form.submit();
+            else{
+                alert('Email invalido');
+                document.getElementById('email').style.borderColor = "#dc3545";
+            }
+        })
+
+        form.querySelectorAll('input').forEach((el)=>{
+            el.addEventListener('focus',(e)=>e.target.removeAttribute('style'));
+        })
+
+        form.addEventListener('keydown',(e)=>{
+            if (e.keyCode == "13") e.preventDefault();
+            if(e.keyCode == "13" || e.keyCode == "40"){
+                if (e.target.id != "password") e.target.parentNode.parentNode.nextElementSibling.querySelector('input').focus();
+                else {
+                    if (emailIsValid(document.getElementById('email').value)) form.submit();
+                    else alert('Email invalido');
+                }
+            }
+            else if(e.keyCode == "38"){
+                e.target.parentNode.parentNode.previousElementSibling.querySelector('input').focus();
+            }
+        });
+    </script>
 </body>
 </html>

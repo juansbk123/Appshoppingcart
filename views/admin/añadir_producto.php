@@ -96,38 +96,35 @@
         <div class="col-md-12">
           <div class="tile">
             <h3 class="tile-title">Añadir producto</h3>
+            <form class="" method="post" action="" enctype="multipart/form-data" id="form-login"> 
             <div class="tile-body">
                 <div class="row">
                   <div class="col-lg-5">
-                  <form class="" method="post" action="" enctype="multipart/form-data" > 
                       <div class="form-group">
                         <label for="exampleInputEmail1">Nombre</label>
-                        <input class="form-control form-control-lg" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" name="name_product">
+                        <input class="form-control form-control-lg" id="input1" type="text" aria-describedby="emailHelp" name="name_product" autofocus>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Descripcion</label>
-                        <textarea class="form-control" rows="4" name="description_product"></textarea>
+                        <textarea class="form-control" rows="4" name="description_product" id="input3"></textarea>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Imagen</label>
-                        <input class="form-control-file" id="exampleInputFile" type="file" aria-describedby="fileHelp" name="file">                      
+                        <input class="form-control-file" id="input5" type="file" aria-describedby="fileHelp" name="file">                      
                       </div>
-                        <!-- <button class="btn login-btn" name="login" type="submit">Acceder</button> -->
-                    <!-- </form> -->
-                 </div>
+                  </div>
                   <div class="col-lg-5 offset-lg-1">
-                    <!-- <form> -->
                       <div class="form-group">
                         <label for="exampleInputEmail1">Precio</label>
                         <div class="input-group">
                         <div class="input-group-prepend"><span class="input-group-text">S/</span></div>
-                        <input class="form-control form-control-lg" id="exampleInputAmount" type="text" name="price_product">
+                        <input class="form-control form-control-lg" id="input2" type="text" name="price_product">
                         <div class="input-group-append"><span class="input-group-text">.00</span></div>
                       </div>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1">Stock</label>
-                        <input class="form-control form-control-lg" id="exampleInputPassword1" type="number"  name="stock_product">
+                        <input class="form-control form-control-lg" id="input4" type="number"  name="stock_product">
                       </div>
                       <!-- <button class="btn login-btn" name="anadir_producto" type="submit">Acceder</button> -->
 
@@ -152,14 +149,45 @@
     <!-- Page specific javascripts-->
     <!-- Google analytics script-->
     <script type="text/javascript">
-      if(document.location.hostname == 'pratikborsadiya.in') {
-      	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      	ga('create', 'UA-72504830-1', 'auto');
-      	ga('send', 'pageview');
+
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+          event.preventDefault();
+          return false;
+        }
+      });
+      function priceIsValid (price) {
+        return /^[0-9]+$/.test(price)  
       }
+      const form = document.getElementById('form-login');
+      
+      form.addEventListener('submit',(e)=>{
+        e.preventDefault();
+            if (!priceIsValid(document.getElementById('input2').value)){
+                alert('Precio invalido');
+                document.getElementById('input2').classList.add('is-invalid');
+            }
+            else if (!priceIsValid(document.getElementById('input4').value)){
+                alert('Stock invalida');
+                document.getElementById('input4').classList.add('is-invalid');
+            } 
+            else form.submit();
+      })
+
+      form.querySelectorAll('input').forEach((el)=>{
+            el.addEventListener('focus',(e)=>e.target.classList.remove('is-invalid'));
+      })
+
+      form.addEventListener('keydown',(e)=>{
+            if(e.keyCode == "13" || e.keyCode == "40"){
+                if (e.target.id != "input5"){
+                  let i = e.target.id.slice('-1'); 
+                  if(e.target.id == "input2") e.target.parentNode.parentNode.parentNode.parentNode.querySelector(`#input${Number(i)+1}`).focus();
+                  else e.target.parentNode.parentNode.parentNode.querySelector(`#input${Number(i)+1}`).focus();
+                }
+                else document.formlogin.submit();
+            }
+        });
     </script>
   </body>
 </html>

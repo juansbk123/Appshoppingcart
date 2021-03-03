@@ -14,7 +14,6 @@ if(!empty($_SESSION['userData']['fecha_nac'])){
 
 include('../../models/user.php');
 $user = new User();
-$res = "";
 
 if(isset($_POST['btn-datos'])) {
     if(empty($_POST['txtemail']) || empty($_POST['txtlastname']) || empty($_POST['txtname'])) {
@@ -129,7 +128,7 @@ session_write_close();
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="head" style="display: flex;justify-content:space-between;"><label for="">E-mail</label><span style="cursor:pointer;font-size:14px; color:#ff6000;text-align:right;" id="add">+ Añadir email adicional</span></div>
+                                        <label for="">E-mail</label>
                                         <input type="text" class="form-control" value="<?php echo $_SESSION['userData']['email'] ?>" name="txtemail">
                                     </div>
                                 </div>
@@ -160,18 +159,31 @@ session_write_close();
                                 </div>
                             </form>
                         </div>
-                        <div class="section-3">
+                        <!-- <div class="section-3">
                             <h3>Direccion de envio</h3>
                             <div class="data-row" id="di-box">
-                                <input type="button" value="Añadir direccion de envio" class="btn btn-submit" id="di">
+                                <input type="button" value="+ Añadir direccion de envio" class="btn btn-submit" id="di">
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
     </main>
+    <?php if(isset($res)){ ?>
     <script>
+    alert("<?php echo $res ?>")
+    </script>
+    <?php } ?>
+    <script>
+        function emailIsValid (email) {
+            return /\S+@\S+\.\S+/.test(email)  
+        }
+
+        function passwordIsValid (pass) {
+            return /^(?=.*\d)(?=.*[A-Z])[0-9a-zA-Z]{6,16}$/.test(pass);
+        }
+
     const oldPass = document.getElementById('new-pass-1'),
           newPass = document.getElementById('new-pass-2'),
           passForm = document.getElementById('pass-form'),
@@ -184,9 +196,13 @@ session_write_close();
             e.preventDefault();
             alert('Las contraseñas no son iguales');
         }
+        else if(!passwordIsValid(newPass)){
+            e.preventDefault();
+            alert('La contraseña no es valida');
+        }
     })
 
-    diButton.addEventListener('click',()=>{
+    diButton && diButton.addEventListener('click',()=>{
         let div = document.createElement('div');
         div.className = "form-group";
         let label = document.createElement('label');
@@ -198,27 +214,8 @@ session_write_close();
         div.appendChild(input_text);
         diBox.replaceChild(div,diButton);
         diBox.insertAdjacentHTML("afterend",`<div class="btn-box"><input type="submit" value="Guardar cambios" class="btn btn-submit" name="btn-pass"></div>`);
-    })
-    
-
-    addEmail.addEventListener('click', (e)=>{
-        let div_2 = document.createElement('div');
-        div_2.classList = "data-row"
-        let div = document.createElement('div');
-        div.className = "form-group";
-        let label = document.createElement('label');
-        label.textContent= "Email 2"
-        let input_text = document.createElement('input');
-        input_text.type = "text";
-        input_text.className = "form-control";
-        div.appendChild(label);
-        div.appendChild(input_text);
-        div_2.appendChild(div);
-        document.getElementById('btn-id').insertAdjacentElement("beforebegin",div_2)
-        e.target.removeEventListener(e.type, arguments.callee);
-    })
-
-
+    })    
     </script>
+
 </body>
 </html>

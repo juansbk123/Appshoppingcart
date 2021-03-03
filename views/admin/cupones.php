@@ -111,11 +111,11 @@
                       <h5 class="modal-title">Añadir cupón</h5>
                       <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
-                    <form action="" method="post">
+                    <form action="" method="post" id="form-login">
                       <div class="modal-body">
                         <div class="form-group">
                             <label class="control-label">Codigo de cupon</label>
-                            <input class="form-control" type="text" name="codigo">
+                            <input class="form-control" type="text" name="codigo" id="input1">
                         </div>
                         <div class="form-group">
                             <label for="exampleSelect1">Tipo</label>
@@ -126,7 +126,7 @@
                         </div>
                         <div class="form-group">
                           <label class="control-label">Valor</label>
-                          <input class="form-control" type="text" name="valor">
+                          <input class="form-control" type="text" name="valor" id="input3">
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -147,6 +147,45 @@
     <!-- Page specific javascripts-->
     <!-- Google analytics script-->
     <script type="text/javascript">
+      $('#modal-create').on('shown.bs.modal', function () {
+        $('#input1').focus();
+        }) 
+
+        $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+          event.preventDefault();
+          return false;
+        }
+      });
+
+      function priceIsValid (price) {
+        return /^[0-9]+$/.test(price)  
+      }
+
+      const form = document.getElementById('form-login');
+                  
+      form.addEventListener('submit',(e)=>{
+          e.preventDefault();
+          if (!priceIsValid(document.getElementById('input3').value)){
+                alert('Valor invalido');
+                document.getElementById('input3').classList.add('is-invalid');
+            }
+            else form.submit();
+
+      })
+
+      form.querySelectorAll('input').forEach((el)=>{
+            el.addEventListener('focus',(e)=>e.target.classList.remove('is-invalid'));
+      })
+      
+      form.addEventListener('keydown',(e)=>{
+            if(e.keyCode == "13" || e.keyCode == "40"){
+                if (e.target.id != "input3"){
+                  e.target.parentNode.nextElementSibling.querySelector('.form-control').focus();
+                }
+                else document.formlogin.submit();
+            }
+        });
     </script>
   </body>
 </html>

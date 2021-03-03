@@ -52,6 +52,7 @@ if($_POST) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="http://localhost/IngWeb/project/assets/css/styles.css">
+    <link rel="stylesheet" href="http://localhost/IngWeb/project/assets/css/auto-complete.css">
 </head>
 <body>
     <?php include("header.php"); ?>  
@@ -157,6 +158,18 @@ if($_POST) {
                 if(confirmar) alert(`Se han añadido ${cantidad} unidad(es) de este articulo al carrito`);
             })
         })
+    </script>
+    <script src="../../assets/js/auto-complete.js"></script>
+    <script>
+        let my_autoComplete = new autoComplete({
+            selector: '#search-box',
+            source: async function(term, response){
+                let req = await fetch('../../config/search/search.php?q='+term);
+                let res = await req.json();
+                response(res);
+            }
+        });
+
     </script>
 </body>
 </html>

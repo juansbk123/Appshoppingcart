@@ -14,8 +14,7 @@ class Product extends Queries{
         parent::__construct();
     }
 
-    public function insert_product(string $name_product, string $description_product,float $price_product,string $ruta_imagen,int $stock_product)
-    {
+    public function insert_product(string $name_product, string $description_product,float $price_product,string $ruta_imagen,int $stock_product) {
         $this->name_product=$name_product;
         $this->description_product=$description_product;
         $this->price_product=$price_product;
@@ -34,21 +33,26 @@ class Product extends Queries{
         $res = $this->select($query);
         return $res;
     }
-    // public function show_product(string $name_product, string $description_product,float $price_product ,string $ruta_imagen,string $stock_product)
-    public function show_product(string $limit=null, string $pattern = null)
-    {
-        //  $this->name_product=$name_product;
-        //  $this->description_product=$description_product;
-        //  $this->price_product=$price_product;
-        //  $this->stock_product=$stock_product;
-        // $this->ruta_imagen=$ruta_imagen;
 
-        //  $query="SELECT nombre,descripcion,precio,ruta_iamgen,stock FROM  producto";
-        
-            $query = ($pattern != null) ? "SELECT * FROM  producto WHERE nombre like '%$pattern%' ORDER BY id DESC $limit" : "SELECT * FROM  producto ORDER BY id DESC $limit";
-            $req=$this->selectAll($query);
+    public function show_product(string $limit=null, string $pattern = null) {   
+        $query = ($pattern != null) ? "SELECT * FROM  producto WHERE nombre like '%$pattern%' ORDER BY id DESC $limit" : "SELECT * FROM  producto ORDER BY id DESC $limit";
+        $req=$this->selectAll($query);
         
         return $req;
      }
+
+     public function updateProduct(int $id, string $name_product, string $description_product,float $price_product,string $ruta_imagen,int $stock_product){
+        $this->id = $id; 
+        $this->name_product=$name_product;
+        $this->description_product=$description_product;
+        $this->price_product=$price_product;
+        $this->stock_product=$stock_product;
+        $this->ruta_imagen=$ruta_imagen;
+        $query = "UPDATE producto SET nombre = ?, descripcion = ?, precio =?, imagen = ?, stock = ? WHERE id = $this->id";
+        $arrData=[$this->name_product,$this->description_product,$this->price_product, $this->ruta_imagen,$this->stock_product];
+        $res = $this->update($query,$arrData);
+        return $res;
+     }
+
     }
 ?>

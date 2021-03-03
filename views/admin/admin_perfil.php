@@ -68,7 +68,7 @@ if($_POST) {
             <div class="tab-pane active" id="user-settings">
               <div class="tile user-settings">
                 <h4 class="line-head">Datos Personales</h4>
-                <form method="post" action="">
+                <form method="post" action="" id="form-login">
                   <div class="row mb-4">
                     <div class="col-md-5">
                       <label>Nombre</label>
@@ -82,7 +82,7 @@ if($_POST) {
                   <div class="row">
                     <div class="col-md-10 mb-4">
                       <label>Email</label>
-                      <input class="form-control" type="email" value="<?php echo $_SESSION['userData']['email'] ?>" name="txtemail">
+                      <input class="form-control" type="email" value="<?php echo $_SESSION['userData']['email'] ?>" name="txtemail" id="email">
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-md-10 mb-4">
@@ -108,7 +108,7 @@ if($_POST) {
         <div class="col-md-3">
           <div class="profile">
             <div class="info"><img class="user-img" src="https://censur.es/wp-content/uploads/2019/03/default-avatar.png">
-              <h4><?php echo $_SESSION['userData']['nombre'] . $_SESSION['userData']['apellidos'] ?></h4>
+              <h4><?php echo $_SESSION['userData']['nombre'] ." ". $_SESSION['userData']['apellidos'] ?></h4>
               <p><?php echo $_SESSION['userData']['rol']?></p>
             </div>
           </div>
@@ -132,6 +132,15 @@ if($_POST) {
       	autoclose: true,
       	todayHighlight: true
       });
+      function emailIsValid (email) {
+            return /\S+@\S+\.\S+/.test(email)  
+        }
+      const form = document.getElementById('form-login');
+        form.addEventListener('submit',(e)=>{
+            e.preventDefault();
+            if (emailIsValid(document.getElementById('email').value)) form.submit();
+            else alert('Email invalido');
+        })
     </script>
   </body>
 </html>
